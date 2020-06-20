@@ -1,0 +1,31 @@
+{
+  "name": "trable",
+  "version": "1.0.0",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc",
+    "build:js": "babel src --out-dir out --extensions \".ts,.tsx\" --source-maps inline",
+    "start": "babel-node -x \".ts\" src/app.ts",
+    "test": "mocha --recursive \"tests\""
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-typescript": "^7.10.1",
+    "@babel/register": "^7.10.3",
+    "mocha": "^8.0.1"
+  }
+}
