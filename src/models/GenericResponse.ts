@@ -8,7 +8,7 @@ class GenericResponse {
         this.message = message;
     }
 
-    public wasSuccessful() {
+    public wasSuccessful(): boolean {
         return this.status === 200;
     }
 }

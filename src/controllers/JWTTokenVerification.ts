@@ -1,5 +1,6 @@
 import {VerifiedCallback} from "passport-jwt";
-import TrableApiUser from "../models/auth/TrableApiUser";
+import TrableApiUser from "../models/auth/TrableApiUserModel";
+import logger from "../utils/logger";
 
 export default async function verify(jwtToken: any, done: VerifiedCallback) {
     try {
@@ -10,7 +11,8 @@ export default async function verify(jwtToken: any, done: VerifiedCallback) {
         }
 
         // Check if jwtToken is still valid
-        if (jwtToken.hasOwnProperty("iat") && (typeof jwtToken.iat === 'number')) {
+
+        if (Object.prototype.hasOwnProperty.call(jwtToken,"iat") && (typeof jwtToken.iat === 'number')) {
             const iat: number = jwtToken.iat
             if (apiUser.tokenLastIssued > iat) // Reject the token because a new one was issued
             {
@@ -22,7 +24,7 @@ export default async function verify(jwtToken: any, done: VerifiedCallback) {
         done(null, apiUser)
 
     } catch (exception) {
-        console.error(exception.getError().toString())
+        logger.error(exception.getError().toString(), { error: exception.getError() })
         done(exception.getError(), false)
     }
 }

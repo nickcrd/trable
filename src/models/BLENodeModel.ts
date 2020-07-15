@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import Location from "./Location";
-import {TrableApiUser, TrableApiUserSchema} from "./auth/TrableApiUser";
+import { TrableApiUser, TrableApiUserSchema } from "./auth/TrableApiUserModel";
 
 export interface BLENode extends Document {
     displayName: string

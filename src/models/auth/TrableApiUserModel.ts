@@ -13,4 +13,4 @@ export const TrableApiUserSchema: Schema = new Schema({
     tokenLastIssued: { type: Number, required: false }
 });
 
-export default mongoose.model<TrableApiUser>("apiUsers", TrableApiUserSchema, "api_users");
+export default mongoose.model<TrableApiUser>("apiUsers", TrableApiUserSchema, "api_users")

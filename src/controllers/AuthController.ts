@@ -6,9 +6,9 @@ const JwtStrategy = passportJwt.Strategy;
 const ExtractJwt = passportJwt.ExtractJwt;
 
 import * as jwt from "jsonwebtoken";
-import {TrableApiUser} from "../models/auth/TrableApiUser";
+import {TrableApiUser} from "../models/auth/TrableApiUserModel";
 
-class AuthController {
+export class AuthController {
     private JWT_SECRET: string;
 
     constructor(JWT_SECRET: string) {
@@ -24,12 +24,7 @@ class AuthController {
             }, jwtVerify));
     }
 
-    public generatePublicKey(privateKey: string)
-    {
-
-    }
-
-    public getJWTfor(user: TrableApiUser): String
+    public getJWTfor(user: TrableApiUser): string
     {
         if (user.tokenLastIssued)
         {
@@ -40,6 +35,7 @@ class AuthController {
             return jwt.sign({ id: user._id }, this.JWT_SECRET)
         }
     }
+
 }
 
 // TODO: Make sure to grab a secret from config or env

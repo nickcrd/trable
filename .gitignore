@@ -1,4 +1,4 @@
-#Based on https://github.com/microsoft/TypeScript-Node-Starter/blob/master/.gitignore, small additions by me
+#Based on https://github.com/microsoft/TypeScript-Node-Starter/blob/master/.gitignore, small additions & changes by me
 lib-cov
 *.seed
 *.log
@@ -14,8 +14,6 @@ logs
 results
 tmp
 
-# Build
-public/css/main.css
 
 # Coverage reports
 coverage

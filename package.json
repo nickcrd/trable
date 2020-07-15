@@ -1,13 +1,21 @@
 {
   "name": "trable",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "description": "Trable is an indoor localization app based on Bluetooth Low Energy",
+  "author": "nickcrd",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickcrd/trable.git"
+  },
+  "bin": {
+    "trable-cli": "./cli.js"
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "npm run build:types && npm run build:js",
-    "build:types": "tsc",
+    "build": "npm run type-check && npm run build:js",
     "build:js": "babel src --out-dir out --extensions \".ts,.tsx\" --source-maps inline",
-    "start": "babel-node -x \".ts\" src/app.ts",
+    "start": "node ./out/app.js",
     "test": "mocha --recursive \"tests\""
   },
   "dependencies": {
@@ -22,7 +30,8 @@
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -39,6 +48,10 @@
     "@types/morgan": "^1.9.1",
     "@types/passport": "^1.0.3",
     "@types/passport-jwt": "^3.0.3",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^7.4.0",
     "mocha": "^8.0.1"
-  }
+  },
+  "license": "MIT"
 }
