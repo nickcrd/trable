@@ -8,11 +8,6 @@ export class AuthController {
 
     constructor(JWT_SECRET: string) {
         this.JWT_SECRET = JWT_SECRET
-        this.setup()
-    }
-
-    public setup() {
-
     }
 
     public async generateJWTfor(user: TrableApiUser) {
