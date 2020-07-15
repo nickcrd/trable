@@ -29,11 +29,10 @@ class TrableApp {
         return this;
     }
 
-    public start(port: number): TrableApp {
+    public start(port: number) {
         this.expressApp.listen(port, () => {
             logger.info("Started Trable server on port " + port)
         });
-
         return this
     }
 }
