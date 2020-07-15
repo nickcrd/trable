@@ -7,6 +7,7 @@ import logger from "./utils/logger";
 import TrableApiUserModel, {TrableApiUser} from "./models/auth/TrableApiUserModel";
 //import {TrableEntityType} from "./models/auth/TrableEntityType";
 import TrableRouter from "./routes/TrableRouter";
+import TestRouter from "./routes/TestRouter";
 
 class TrableApp {
     public expressApp: express.Application;
@@ -49,7 +50,7 @@ new MongoConnection(mongoUrl)
 
 
 const app = new TrableApp()
-    .registerRouters([ ])
+    .registerRouters([ new TestRouter() ])
     .start(8080)
 
 // Some testing -- Make sure to remove stuff below
@@ -77,9 +78,10 @@ TrableApiUserModel.create({
     })
 } )*/
 
-TrableApiUserModel.findById("5eefb42719f2e4053b516b65").then((user: TrableApiUser | null) => {
+TrableApiUserModel.findById("5eefb42719f2e4053b516b65").then(async (user: TrableApiUser | null) => {
     if (user){
-        logger.info(AuthController.getJWTfor(user))
+        const token = await AuthController.generateJWTfor(user)
+        logger.info(token)
     }
 }).catch(err => logger.error(err.toString()))
 
