@@ -1,7 +1,5 @@
 import * as jwt from "jsonwebtoken";
 import TrableApiUserModel, {TrableApiUser} from "../models/auth/TrableApiUserModel";
-import currentEpochSeconds from "../utils/currentEpochSeconds";
-import logger from "../utils/logger";
 
 export class AuthController {
     private JWT_SECRET: string;
