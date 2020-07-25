@@ -33,7 +33,6 @@ export class AuthController {
     }
 
     public validateJWTFields(token: any): boolean {
-        logger.info(JSON.stringify(token))
         if (Object.prototype.hasOwnProperty.call(token, "id") &&
             Object.prototype.hasOwnProperty.call(token, "iat")) {
             return true;
