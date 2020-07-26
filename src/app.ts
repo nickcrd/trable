@@ -5,11 +5,6 @@ import morgan from 'morgan';
 import MongoConnection from "./config/database";
 import logger from "./utils/logger";
 
-import AuthController from "./controllers/AuthController";
-
-import TrableApiUserModel, {TrableApiUser} from "./models/auth/TrableApiUserModel";
-//import {TrableEntityType} from "./models/auth/TrableEntityType";
-
 import TrableRouter from "./routes/TrableRouter";
 import DeviceRouter from "./routes/device/DeviceRouter";
 
