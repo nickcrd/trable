@@ -9,7 +9,9 @@ import TrableRouter from "./routes/TrableRouter";
 import DeviceRouter from "./routes/device/DeviceRouter";
 
 import validationErrorHandler from "./middlewares/validationErrorHandler";
+
 import trableConfig from "./config/config";
+import ApiRouter from "./routes/ApiRouter";
 
 class TrableApp {
     public expressApp: express.Application;
@@ -47,12 +49,10 @@ class TrableApp {
     }
 }
 
-// Ugly hack during development
-require('dotenv').config()
-///
-
 const app = new TrableApp()
-    .registerRouters([ new DeviceRouter() ])
+    .registerRouters([ new ApiRouter("v1", [
+            new DeviceRouter()
+        ])])
     .start(8080)
 
 export default app

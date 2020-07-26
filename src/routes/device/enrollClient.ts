@@ -7,7 +7,7 @@ export default (router: Router) => {
     router.get('/enrollClient', async (req: Request, res: Response) => {
         try {
             const result = await DeviceController.createApiUserForClient()
-            await res.json(result)
+            res.json(result)
         } catch (error) {
             res.status(500).json(new GenericResponse(500, error.toString()))
         }

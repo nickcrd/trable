@@ -1,17 +1,16 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, {Schema, Document, Types } from "mongoose";
 import Location from "./Location";
-import { TrableApiUser, TrableApiUserSchema } from "../auth/TrableApiUserModel";
 
 export interface BLENode extends Document {
     displayName: string
     location: Location
-    apiUser: TrableApiUser
+    apiUserId: string
 }
 
 const BLENodeSchema: Schema = new Schema({
-    displayName: { type: String , required: false},
+    displayName: { type: String , required: false },
     location: { type: Map, required: true },
-    apiUser: TrableApiUserSchema
+    apiUserId: { type: Schema.Types.ObjectId, required: true }
 });
 
 export default mongoose.model<BLENode>("nodes", BLENodeSchema);

@@ -1,5 +1,6 @@
 import TrableRouter from "../TrableRouter";
 import enrollClient from "./enrollClient";
+import enrollNode from "./enrollNode";
 
 export default class DeviceRouter extends TrableRouter {
     constructor() {
@@ -8,5 +9,6 @@ export default class DeviceRouter extends TrableRouter {
 
     registerRoutes(): void {
         enrollClient(this.expressRouter)
+        enrollNode(this.expressRouter)
     }
 }
