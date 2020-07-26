@@ -1,5 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import TrableApiUserModel, {TrableApiUser} from "../models/auth/TrableApiUserModel";
+import config from "../config/config";
+import {TrableEntityType} from "../models/auth/TrableEntityType";
 
 export class AuthController {
     private JWT_SECRET: string;
@@ -8,7 +10,7 @@ export class AuthController {
         this.JWT_SECRET = JWT_SECRET
     }
 
-    public async generateJWTfor(user: TrableApiUser) {
+    public async generateJWTfor(user: TrableApiUser): Promise<string> {
         return new Promise((resolve, reject) => {
             jwt.sign({ id: user._id, iat: user.tokenLastIssued }, this.JWT_SECRET, ( err: Error | null, encoded: string | undefined) => {
                 if (encoded) {
@@ -68,5 +70,4 @@ export class AuthController {
     }
 }
 
-// TODO: Make sure to grab a secret from config or env
-export default new AuthController("AAAA")
+export default new AuthController(config.authSecret)

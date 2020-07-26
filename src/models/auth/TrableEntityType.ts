@@ -1,4 +1,5 @@
 export enum TrableEntityType {
     USER = "USER",
-    TOKEN = "TOKEN"
+    CLIENT = "CLIENT",
+    NODE = "NODE"
 }

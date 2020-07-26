@@ -1,13 +1,19 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+
 import MongoConnection from "./config/database";
-import AuthController from "./controllers/AuthController";
 import logger from "./utils/logger";
+
+import AuthController from "./controllers/AuthController";
+
 import TrableApiUserModel, {TrableApiUser} from "./models/auth/TrableApiUserModel";
 //import {TrableEntityType} from "./models/auth/TrableEntityType";
+
 import TrableRouter from "./routes/TrableRouter";
-import TestRouter from "./routes/TestRouter";
+import DeviceRouter from "./routes/device/DeviceRouter";
+
+import validationErrorHandler from "./middlewares/validationErrorHandler";
 
 class TrableApp {
     public expressApp: express.Application;
@@ -31,6 +37,8 @@ class TrableApp {
     }
 
     public start(port: number) {
+        this.expressApp.use(validationErrorHandler) // placed it here since error handlers need to be registered last
+
         this.expressApp.listen(port, () => {
             logger.info("Started Trable server on port " + port)
         });
@@ -50,7 +58,7 @@ new MongoConnection(mongoUrl)
 
 
 const app = new TrableApp()
-    .registerRouters([ new TestRouter() ])
+    .registerRouters([ new DeviceRouter() ])
     .start(8080)
 
 // Some testing -- Make sure to remove stuff below
@@ -77,6 +85,7 @@ TrableApiUserModel.create({
         apiUser: data
     })
 } )*/
+
 
 TrableApiUserModel.findById("5eefb42719f2e4053b516b65").then(async (user: TrableApiUser | null) => {
     if (user){
