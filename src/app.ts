@@ -14,12 +14,15 @@ import TrableRouter from "./routes/TrableRouter";
 import DeviceRouter from "./routes/device/DeviceRouter";
 
 import validationErrorHandler from "./middlewares/validationErrorHandler";
+import trableConfig from "./config/config";
 
 class TrableApp {
     public expressApp: express.Application;
 
     constructor() {
         this.expressApp = express();
+
+        new MongoConnection(trableConfig.mongoUrl)
         this.registerMiddlewares()
     }
 
@@ -48,50 +51,10 @@ class TrableApp {
 
 // Ugly hack during development
 require('dotenv').config()
-
-let mongoUrl = "";
-if (process.env.MONGO_DB_URL)
-    mongoUrl = process.env.MONGO_DB_URL
-
-new MongoConnection(mongoUrl)
 ///
-
 
 const app = new TrableApp()
     .registerRouters([ new DeviceRouter() ])
     .start(8080)
-
-// Some testing -- Make sure to remove stuff below
-
-/*
-BLENodeModel.create({
-    location: { x: 1.5, y: 2, z: 9.42 }
-}).then((data: BLENodeModel) => {
-    console.log(data)
-})
-
-*/
-/*
-TrableApiUserModel.create({
-    entityType: TrableEntityType.TOKEN,
-    permissions: [ "sensor.submitRSSI", "admin.listAllLocations" ],
-    tokenLastIssued: ( Date.now() / 1000 )
-}).then((data: TrableApiUserModel) => {
-    console.log(data)
-
-    BLENodeModel.create({
-        displayName: "Test Node 1 ",
-        location: { x: 1, y: 2, z: 3},
-        apiUser: data
-    })
-} )*/
-
-
-TrableApiUserModel.findById("5eefb42719f2e4053b516b65").then(async (user: TrableApiUser | null) => {
-    if (user){
-        const token = await AuthController.generateJWTfor(user)
-        logger.info(token)
-    }
-}).catch(err => logger.error(err.toString()))
 
 export default app
