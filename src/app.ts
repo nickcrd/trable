@@ -16,9 +16,12 @@ class TrableApp {
 
     constructor() {
         this.expressApp = express();
-
-        new MongoConnection(trableConfig.mongoUrl)
+        this.loadModules()
         this.registerMiddlewares()
+    }
+
+    private loadModules() {
+        new MongoConnection(trableConfig.mongoUrl)
     }
 
     private registerMiddlewares() {
