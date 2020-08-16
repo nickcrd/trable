@@ -8,7 +8,7 @@
     "url": "https://github.com/nickcrd/trable.git"
   },
   "bin": {
-    "trable-cli": "./cli.js"
+    "trable": "./cli.js"
   },
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.5",
+    "@sentry/node": "5.20.1",
     "celebrate": "^12.1.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

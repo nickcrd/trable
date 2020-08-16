@@ -1,10 +1,14 @@
 import winston from "winston";
+import trableConfig from "../config/config";
 
 const logger = winston.createLogger({
-    level: "info",
-    format: winston.format.json(),
+    level: trableConfig.configLevel,
+    format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+    ),
     transports: [
-        new winston.transports.Console({ format: winston.format.simple() })
+        new winston.transports.Console()
     ]
 })
 

@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document, Types } from "mongoose";
+import mongoose, {Schema, Document } from "mongoose";
 import Location from "./Location";
 
 export interface BLENode extends Document {
