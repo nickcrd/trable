@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('./out/app')
+import "./app";

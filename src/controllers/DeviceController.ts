@@ -4,11 +4,14 @@ import currentEpochSeconds from "../utils/currentEpochSeconds";
 import AuthController from "./AuthController";
 import {ClientEnrollmentResponse} from "../models/device/ClientEnrollmentResponse";
 import {NodeEnrollmentResponse} from "../models/device/NodeEnrollmentResponse";
-import BLENodeModel from "../models/device/BLENodeModel";
+import BLENodeModel, {BLENode} from "../models/device/BLENodeModel";
 import Location from "../models/device/Location";
 import permission from "../utils/permission";
+import {hashids} from "../utils/hashIdUtil"
 
 export class DeviceController {
+
+    private bleNodeCache: Map<string, BLENode> = new Map()
 
     private DEFAULT_CLIENT_PERMS: string[] = [ ]
     private DEFAULT_NODE_PERMS: string[] = [ permission.sensor.submitRSSI ]
@@ -23,8 +26,12 @@ export class DeviceController {
 
         const apiKey = await AuthController.generateJWTfor(apiUser)
 
+        // Need to do + "" so it's a string even when built to plain js, otherwise hashids will throw an error
+        const bleAdvertisementId = hashids.encodeHex(apiUser._id + "")
+
         return {
             clientId: apiUser._id,
+            bleAdvertisementId: bleAdvertisementId,
             apiKey: apiKey
         }
     }
@@ -48,6 +55,20 @@ export class DeviceController {
             nodeId: bleNode.id,
             apiKey: apiKey
         }
+    }
+
+    public async getNodeFromCache(id: string): Promise<BLENode | undefined> {
+        if (this.bleNodeCache.has(id)) {
+            return this.bleNodeCache.get(id)
+        }
+
+        const bleNode = await BLENodeModel.findById(id).exec()
+        if (!bleNode) {
+            return undefined
+        } else {
+            return bleNode
+        }
+
     }
 
 }

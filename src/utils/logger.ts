@@ -1,8 +1,8 @@
 import winston from "winston";
-import trableConfig from "../config/config";
+import {config} from "node-config-ts";
 
 const logger = winston.createLogger({
-    level: trableConfig.configLevel,
+    level: config.configLevel,
     format: winston.format.combine(
         winston.format.colorize(),
         winston.format.simple()

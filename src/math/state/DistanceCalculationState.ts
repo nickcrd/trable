@@ -1,18 +1,20 @@
 import KalmanFilter from "../../utils/KalmanFilter";
-import {defaultKalmanFilter} from "../../utils/kalmanUtils";
+import {getDefaultKalmanFilter} from "../../utils/kalmanUtils";
 
-export default class LocationCalcState {
+export default class DistanceCalculationState {
     kalmanFilter: KalmanFilter
     rssiMeasurements: {timestamp: number, rssi: number}[] = []
 
     txPower: number
+    pathLossParameter: number
 
     isMoving: boolean = false;
     movingScalar: number = 1
 
-    constructor(txPower: number, kalmanFilter?: KalmanFilter) {
-        this.kalmanFilter = kalmanFilter ?? defaultKalmanFilter
+    constructor(txPower: number, pathLossParameterN: number, kalmanFilter?: KalmanFilter) {
+        this.kalmanFilter = kalmanFilter ?? getDefaultKalmanFilter()
         this.txPower = txPower
+        this.pathLossParameter = pathLossParameterN
     }
 
     addMeasurement(timestamp: number, rssi: number) {
@@ -28,14 +30,21 @@ export default class LocationCalcState {
         return total / this.rssiMeasurements.length;
     }
 
-    // TODO: Improvements based on Research(?)
     async calculateDistanceInMeters(): Promise<number> {
         if (this.rssiMeasurements.length == 0) {
             throw NaN
         }
 
-        let distance = Math.pow(10, (this.txPower - this.averageRSSI()) / 20)  // 10^((txPower-rssi)/20)
-        return distance / 1000
+        // Old Calculation:
+        // let distance = Math.pow(10, (this.txPower - this.averageRSSI()) / 20)  // 10^((txPower-rssi)/20)
+        //  return distance / 1000
+
+        let distance = Math.pow(10, (this.averageRSSI() - this.txPower) / (-10 * this.pathLossParameter)) // 10 ^ (RSSI-rssi1m/(-10n))
+        return distance
+    }
+
+    public amountOfMeasurements() {
+        return this.rssiMeasurements.length
     }
 
 }

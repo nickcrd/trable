@@ -1,20 +1,25 @@
 import Location from "../models/device/Location";
 import KalmanFilter from "../utils/KalmanFilter";
-import trableConfig from "../config/config";
 import logger from "../utils/logger";
+import {TrableApiUser} from "../models/auth/TrableApiUserModel";
+import DeviceController from "./DeviceController";
+import BLENodeModel from "../models/device/BLENodeModel";
 
 class LocationController {
 
 //    private locationCache: [string: Location]
 
-    public async submitNewMeasurement(targetId: string, txPower: number, rssi: number, timestamp: number) {
-        logger.debug("Recieved new RSSI measurement { " + "target: " +  targetId + ", txPower: " + txPower + ", rssi: " + rssi + ", timestamp: " + timestamp + " }")
-    }
+    public async submitNewMeasurement(apiUser: TrableApiUser, targetId: string, txPower: number, rssi: number, timestamp?: number) {
+        logger.debug("Received new RSSI measurement { " + "target: " +  targetId + ", txPower: " + txPower + ", rssi: " + rssi + ", timestamp: " + timestamp + " }")
 
-    public async getLocation(id: string): Promise<Location> {
-        // TODO: Method stub
+        const bleNode = await BLENodeModel.findOne({ apiUserId: apiUser.id }).exec()
+        if (bleNode == null) {
+            logger.warn("Invalid Measurement Recieved: There is no BLENode corresponding to the API Client ID")
+            return;
+        }
 
-        return { x: 0, y: 0, z: 0}
+
+
     }
 }
 

@@ -1,7 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import TrableApiUserModel, {TrableApiUser} from "../models/auth/TrableApiUserModel";
-import config from "../config/config";
 import {TrableEntityType} from "../models/auth/TrableEntityType";
+import app from "../app";
+import {config} from "node-config-ts";
 
 export class AuthController {
     private JWT_SECRET: string;

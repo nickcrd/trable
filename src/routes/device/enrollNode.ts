@@ -5,7 +5,9 @@ import requireAuth from "../../middlewares/auth/requireAuth";
 import requirePermission from "../../middlewares/auth/requirePermission";
 import {celebrate, Joi, Segments} from "celebrate";
 import permission from "../../utils/permission";
+import logger from "../../utils/logger";
 
+/* ... */
 export default (router: Router) => {
     router.post('/enrollNode', [
         requireAuth,
@@ -26,6 +28,7 @@ export default (router: Router) => {
             res.json(result)
         } catch (error) {
             res.status(500).json(new GenericResponse(500, error.toString()))
+            logger.error("An error occurred during request: " + error)
         }
     })
 }

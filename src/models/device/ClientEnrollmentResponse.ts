@@ -1,4 +1,5 @@
 export interface ClientEnrollmentResponse {
-    clientId: string,
+    clientId: string
+    bleAdvertisementId: string
     apiKey: string
 }
