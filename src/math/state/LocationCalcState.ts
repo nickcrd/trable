@@ -18,7 +18,7 @@ export default class LocationCalcState {
         this.userId = userId
     }
 
-    public handleNewRSSIMeasurement(node: BLENode, rssi: number, txPower: number, timestamp: number) {
+    public handleNewRSSIMeasurement(node: BLENode, rssi: number, txPower: number, timestamp?: number) {
         if (this.calculationStates.has(node.id)) {
             // @ts-ignore
             this.calculationStates.get(node.id).addMeasurement(timestamp, rssi)
@@ -26,7 +26,7 @@ export default class LocationCalcState {
         }
 
         const distanceCalcState = new DistanceCalculationState(txPower, MathConstants.DEFAULT_PATH_LOSS_PARAMETER)
-        distanceCalcState.addMeasurement(timestamp, rssi)
+        distanceCalcState.addMeasurement(rssi, timestamp)
 
         this.calculationStates.set(node.id, distanceCalcState)
     }
@@ -58,6 +58,7 @@ export default class LocationCalcState {
 
             const bleNode = await DeviceController.getNodeFromCache(nodeId)
             if (bleNode == undefined) {
+                logger.warn("Node " + nodeId + " was not found.")
                 continue
             }
 

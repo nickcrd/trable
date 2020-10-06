@@ -3,7 +3,7 @@ import {getDefaultKalmanFilter} from "../../utils/kalmanUtils";
 
 export default class DistanceCalculationState {
     kalmanFilter: KalmanFilter
-    rssiMeasurements: {timestamp: number, rssi: number}[] = []
+    rssiMeasurements: {timestamp?: number, rssi: number}[] = []
 
     txPower: number
     pathLossParameter: number
@@ -17,7 +17,7 @@ export default class DistanceCalculationState {
         this.pathLossParameter = pathLossParameterN
     }
 
-    addMeasurement(timestamp: number, rssi: number) {
+    addMeasurement(rssi: number, timestamp?: number) {
         // Filter then push
         rssi = this.kalmanFilter.filter(rssi, (this.isMoving ? this.movingScalar : 0))
         this.rssiMeasurements.push({timestamp, rssi})

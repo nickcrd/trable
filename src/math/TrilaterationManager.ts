@@ -5,15 +5,15 @@ import logger from "../utils/logger";
 import SocketManager from "../sockets/SocketManager";
 import {BLENode} from "../models/device/BLENodeModel";
 
-export default class TrilaterationManager {
+export class TrilaterationManager {
 
     private calculationStates: Map<string, LocationCalcState> = new Map()
 
     constructor() {
-        setTimeout(this.calculationLoop, 10 * 1000)
+        setTimeout(this.calculationLoop.bind(this), 10 * 1000)
     }
 
-    public handleNewMeasurement(node: BLENode, clientId: string, rssi: number, txPower: number, timestamp: number) {
+    public handleNewMeasurement(node: BLENode, clientId: string, rssi: number, txPower: number, timestamp?: number) {
         if (!this.calculationStates.has(clientId)) {
             this.calculationStates.set(clientId, new LocationCalcState(clientId))
         }
@@ -22,6 +22,7 @@ export default class TrilaterationManager {
     }
 
     public async calculationLoop() {
+        logger.debug("New Calculation Loop --------------------")
         for (let [userId, calcState] of this.calculationStates) {
             try {
                 const position = await calcState.calculatePosition()
@@ -36,6 +37,9 @@ export default class TrilaterationManager {
                 calcState.resetState()
             }
         }
+        logger.debug("End Calculation Loop --------------------")
     }
 
 }
+
+export default new TrilaterationManager()

@@ -8,13 +8,14 @@ import BLENodeModel, {BLENode} from "../models/device/BLENodeModel";
 import Location from "../models/device/Location";
 import permission from "../utils/permission";
 import {hashids} from "../utils/hashIdUtil"
+import logger from "../utils/logger";
 
 export class DeviceController {
 
     private bleNodeCache: Map<string, BLENode> = new Map()
 
-    private DEFAULT_CLIENT_PERMS: string[] = [ ]
-    private DEFAULT_NODE_PERMS: string[] = [ permission.sensor.submitRSSI ]
+    private DEFAULT_CLIENT_PERMS: string[] = []
+    private DEFAULT_NODE_PERMS: string[] = [permission.sensor.submitRSSI]
 
     public async createApiUserForClient(): Promise<ClientEnrollmentResponse> {
 
@@ -71,6 +72,23 @@ export class DeviceController {
 
     }
 
-}
 
+    private apiUserNodeIdCache: Map<string, string> = new Map()
+
+    public async getNodeFromApiUserId(apiUserId: string): Promise<BLENode | undefined> {
+        if (this.apiUserNodeIdCache.has(apiUserId)) {
+            const nodeId = this.apiUserNodeIdCache.get(apiUserId)
+            return this.getNodeFromCache(nodeId!);
+        }
+
+        const bleNode = await BLENodeModel.findOne({apiUserId: apiUserId}).exec()
+        if (bleNode == null) {
+            logger.warn("Invalid Measurement Received: There is no BLENode corresponding to the API Client ID")
+            return;
+        }
+
+        this.apiUserNodeIdCache.set(apiUserId, bleNode.id)
+        return this.getNodeFromCache(apiUserId)
+    }
+}
 export default new DeviceController()

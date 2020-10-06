@@ -35,16 +35,17 @@ export class SocketManager {
              */
 
         });
-
+        /*
         setInterval(() => {
             this.socketIdMap.forEach((value, key) => {
                 this.io?.to(value).emit('updateLocation', {x: Math.random() * 3, y: Math.random() * 5 })
             })
         }, 5000)
-
+        */
     }
 
     public notifyClientPositionChange(userId: string, location: Location) {
+        logger.info("New Location Update: ", { userId: userId, location: location })
         this.io?.to(userId).emit('updateLocation', location)
     }
 
