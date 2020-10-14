@@ -8,16 +8,16 @@ import TrilaterationManager from "../math/TrilaterationManager";
 
 class LocationController {
 
-    public async submitNewMeasurement(apiUser: TrableApiUser, targetId: string, txPower: number, rssi: number, timestamp?: number) {
-        logger.debug("Received new RSSI measurement { " + "target: " +  targetId + ", txPower: " + txPower + ", rssi: " + rssi + ", timestamp: " + timestamp + " }")
+    public async submitNewMeasurement(apiUser: TrableApiUser, targetId: string, rssi1m: number, rssiMeasurements: number[], pathLossParam: number, timestamp?: number) {
+        logger.debug("Received new RSSI measurements { " + "target: " +  targetId + ", rssi1m: " + rssi1m + ", rssiMeasurements: " + rssiMeasurements + ", pathLossParam: " + pathLossParam + ",timestamp: " + timestamp + " }")
 
         const bleNode = await DeviceController.getNodeFromApiUserId(apiUser.id)
         if (bleNode == null) {
-            logger.warn("Invalid Measurement Received: There is no BLENode corresponding to the API Client ID")
+            logger.warn("Invalid Measurement Batch Received: There is no BLENode corresponding to the API Client ID")
             return;
         }
 
-        TrilaterationManager.handleNewMeasurement(bleNode, targetId, rssi, txPower, timestamp)
+        TrilaterationManager.handleNewMeasurement(bleNode, targetId, rssiMeasurements, rssi1m, pathLossParam, timestamp)
     }
 }
 

@@ -18,15 +18,28 @@ export default class LocationCalcState {
         this.userId = userId
     }
 
-    public handleNewRSSIMeasurement(node: BLENode, rssi: number, txPower: number, timestamp?: number) {
+    public handleNewRSSIMeasurement(node: BLENode, rssi: number, rssi1m: number, pathLossParam: number, timestamp?: number) {
         if (this.calculationStates.has(node.id)) {
             // @ts-ignore
             this.calculationStates.get(node.id).addMeasurement(timestamp, rssi)
             return;
         }
 
-        const distanceCalcState = new DistanceCalculationState(txPower, MathConstants.DEFAULT_PATH_LOSS_PARAMETER)
+        const distanceCalcState = new DistanceCalculationState(rssi1m, pathLossParam)
         distanceCalcState.addMeasurement(rssi, timestamp)
+
+        this.calculationStates.set(node.id, distanceCalcState)
+    }
+
+    public handleNewRSSIMeasurementBatch(node: BLENode, rssiMeasurements: number[], rssi1m: number, pathLossParam: number, timestamp?: number) {
+        if (this.calculationStates.has(node.id)) {
+            const distanceCalcState = this.calculationStates.get(node.id);
+            rssiMeasurements.forEach(rssi => distanceCalcState?.addMeasurement(rssi))
+            return;
+        }
+
+        const distanceCalcState = new DistanceCalculationState(rssi1m, pathLossParam)
+        rssiMeasurements.forEach(rssi => distanceCalcState.addMeasurement(rssi))
 
         this.calculationStates.set(node.id, distanceCalcState)
     }
@@ -61,8 +74,7 @@ export default class LocationCalcState {
                 logger.warn("Node " + nodeId + " was not found.")
                 continue
             }
-
-            distancesMap.set(bleNode.location, distance)
+            distancesMap.set(bleNode.location as Location, distance)
         }
 
         if (distancesMap.size < 3) {

@@ -13,13 +13,14 @@ export default (router: Router) => {
         celebrate({
             [Segments.BODY]: {
                 targetId: Joi.string().required(),
-                rssi: Joi.number().required(),
-                txPower: Joi.number(),
+                rssiMeasurements: Joi.array().required(),
+                rssi1m: Joi.number().required(),
+                pathLossParam: Joi.number().required(),
                 timestamp: Joi.number()
             }
         })
     ], async (req: Request, res: Response) => {
-        await LocationController.submitNewMeasurement(req.user as TrableApiUser, req.body.targetId, req.body.txPower, req.body.rssi, req.body.timestamp)
+        await LocationController.submitNewMeasurement(req.user as TrableApiUser, req.body.targetId, req.body.rssi1m, req.body.rssiMeasurements, req.body.pathLossParam, req.body.timestamp)
         // eventEmitter.emit(events.newRawRSSIMeasurement, req.body)
         res.json({ status: 200 })
     })

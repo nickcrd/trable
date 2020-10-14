@@ -7,18 +7,13 @@ declare module "node-config-ts" {
     sentryUrl?: string
     configLevel: string
     manifest: Manifest
-    nodeConfig: NodeConfig
+    kalmanFilterConfig: KalmanFilterConfig
   }
   interface Manifest {
     serverDisplayName: string
     apiBaseUrl: string
   }
-  interface NodeConfig {
-    defaultTxPower: number
-    minMeasurements: number
-    kalman: Kalman
-  }
-  interface Kalman {
+  interface KalmanFilterConfig {
     R: number
     Q: number
   }

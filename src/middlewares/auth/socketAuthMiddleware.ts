@@ -16,7 +16,8 @@ export default (socket: Socket, next: (err?: any) => void) => {
     }
 
     AuthController.validateJWT(jwt).then(apiUser => {
-        SocketManager.socketIdMap.set(apiUser._id, socket.id)
+        SocketManager.socketIdMap.set(apiUser.id, socket.id)
+        logger.info(apiUser.id + " belongs to " + socket.id)
         next()
     }).catch(err => {
         logger.warn("Invalid Auth Token specified")

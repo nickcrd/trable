@@ -46,7 +46,7 @@ export class SocketManager {
 
     public notifyClientPositionChange(userId: string, location: Location) {
         logger.info("New Location Update: ", { userId: userId, location: location })
-        this.io?.to(userId).emit('updateLocation', location)
+        this.io?.to(this.socketIdMap.get(userId)!).emit('updateLocation', location)
     }
 
 }

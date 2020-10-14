@@ -5,15 +5,15 @@ export default class DistanceCalculationState {
     kalmanFilter: KalmanFilter
     rssiMeasurements: {timestamp?: number, rssi: number}[] = []
 
-    txPower: number
+    rssiAt1m: number
     pathLossParameter: number
 
     isMoving: boolean = false;
     movingScalar: number = 1
 
-    constructor(txPower: number, pathLossParameterN: number, kalmanFilter?: KalmanFilter) {
+    constructor(rssiAt1m: number, pathLossParameterN: number, kalmanFilter?: KalmanFilter) {
         this.kalmanFilter = kalmanFilter ?? getDefaultKalmanFilter()
-        this.txPower = txPower
+        this.rssiAt1m = rssiAt1m
         this.pathLossParameter = pathLossParameterN
     }
 
@@ -39,7 +39,7 @@ export default class DistanceCalculationState {
         // let distance = Math.pow(10, (this.txPower - this.averageRSSI()) / 20)  // 10^((txPower-rssi)/20)
         //  return distance / 1000
 
-        let distance = Math.pow(10, (this.averageRSSI() - this.txPower) / (-10 * this.pathLossParameter)) // 10 ^ (RSSI-rssi1m/(-10n))
+        let distance = Math.pow(10, (this.averageRSSI() - this.rssiAt1m) / (-10 * this.pathLossParameter)) // 10 ^ (RSSI-rssi1m/(-10n))
         return distance
     }
 

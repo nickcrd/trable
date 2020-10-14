@@ -2,17 +2,13 @@
   "authSecret": "insert-auth-secret-here",
   "mongoUrl": "mongodb://localhost:27017/trable",
   "sentryUrl": null,
-  "configLevel": "debug",
+  "loggerLevel": "debug",
   "manifest": {
     "serverDisplayName": "A Trable Server",
     "apiBaseUrl": "http://172.16.4.35:8080/"
   },
-  "nodeConfig": {
-    "defaultTxPower": -48,
-    "minMeasurements": 5,
-    "kalman": {
-      "R": 0.008,
-      "Q": 4
-    }
+  "kalmanFilterConfig": {
+    "R": 0.008,
+    "Q": 4
   }
 }

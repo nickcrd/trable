@@ -10,15 +10,15 @@ export class TrilaterationManager {
     private calculationStates: Map<string, LocationCalcState> = new Map()
 
     constructor() {
-        setTimeout(this.calculationLoop.bind(this), 10 * 1000)
+        setInterval(this.calculationLoop.bind(this), 10 * 1000)
     }
 
-    public handleNewMeasurement(node: BLENode, clientId: string, rssi: number, txPower: number, timestamp?: number) {
+    public handleNewMeasurement(node: BLENode, clientId: string, rssi: number[], rssi1m: number, pathLossParam: number, timestamp?: number) {
         if (!this.calculationStates.has(clientId)) {
             this.calculationStates.set(clientId, new LocationCalcState(clientId))
         }
 
-        this.calculationStates.get(clientId)?.handleNewRSSIMeasurement(node, rssi, txPower, timestamp)
+        this.calculationStates.get(clientId)?.handleNewRSSIMeasurementBatch(node, rssi, rssi1m, pathLossParam, timestamp)
     }
 
     public async calculationLoop() {

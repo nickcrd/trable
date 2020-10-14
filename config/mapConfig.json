@@ -8,7 +8,7 @@
   "maxZoom": 8,
   "markers": [
     {
-      "displayName": "Test Point --- <h1>HELLO</h1>",
+      "displayName": "Test Marker",
       "location": [2, 3]
     }
   ]

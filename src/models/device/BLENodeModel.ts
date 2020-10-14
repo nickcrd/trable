@@ -9,7 +9,11 @@ export interface BLENode extends Document {
 
 const BLENodeSchema: Schema = new Schema({
     displayName: { type: String , required: false },
-    location: { type: Map, required: true },
+    location: {
+        x: { type: Number },
+        y: { type: Number },
+        z: { type: Number }
+    },
     apiUserId: { type: Schema.Types.ObjectId, required: true }
 });
 

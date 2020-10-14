@@ -73,7 +73,9 @@ class TrableApp {
         SocketManager.setupSockets(httpServer)
 
         httpServer.listen(port, () => {
-            logger.info("Started Trable server on port " + port)
+            logger.info("TRABLE BACKEND ------------------------------")
+            logger.info(" Started Trable server on port " + port)
+            logger.info("---------------------------------------------")
         });
         return this
     }
