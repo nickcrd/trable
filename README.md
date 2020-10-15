@@ -10,7 +10,7 @@ git clone https://github.com/nickcrd/trable && cd ./trable
 ``` 
 2. Install with npm or yarn
 ```
-npm install -g .
+npm install -g . --only=prod
 ```
 3. Edit the config found in ``/config/default.json`` and ``/config/mapConfig.json``
 
