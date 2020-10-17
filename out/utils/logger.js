@@ -1,0 +1,22 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _winston = _interopRequireDefault(require("winston"));
+
+var _nodeConfigTs = require("node-config-ts");
+
+var logger = _winston["default"].createLogger({
+  level: _nodeConfigTs.config.configLevel,
+  format: _winston["default"].format.combine(_winston["default"].format.colorize(), _winston["default"].format.simple()),
+  transports: [new _winston["default"].transports.Console()]
+});
+
+var _default = logger;
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy91dGlscy9sb2dnZXIudHMiXSwibmFtZXMiOlsibG9nZ2VyIiwid2luc3RvbiIsImNyZWF0ZUxvZ2dlciIsImxldmVsIiwiY29uZmlnIiwiY29uZmlnTGV2ZWwiLCJmb3JtYXQiLCJjb21iaW5lIiwiY29sb3JpemUiLCJzaW1wbGUiLCJ0cmFuc3BvcnRzIiwiQ29uc29sZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBRUEsSUFBTUEsTUFBTSxHQUFHQyxvQkFBUUMsWUFBUixDQUFxQjtBQUNoQ0MsRUFBQUEsS0FBSyxFQUFFQyxxQkFBT0MsV0FEa0I7QUFFaENDLEVBQUFBLE1BQU0sRUFBRUwsb0JBQVFLLE1BQVIsQ0FBZUMsT0FBZixDQUNKTixvQkFBUUssTUFBUixDQUFlRSxRQUFmLEVBREksRUFFSlAsb0JBQVFLLE1BQVIsQ0FBZUcsTUFBZixFQUZJLENBRndCO0FBTWhDQyxFQUFBQSxVQUFVLEVBQUUsQ0FDUixJQUFJVCxvQkFBUVMsVUFBUixDQUFtQkMsT0FBdkIsRUFEUTtBQU5vQixDQUFyQixDQUFmOztlQVdlWCxNIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHdpbnN0b24gZnJvbSBcIndpbnN0b25cIjtcbmltcG9ydCB7Y29uZmlnfSBmcm9tIFwibm9kZS1jb25maWctdHNcIjtcblxuY29uc3QgbG9nZ2VyID0gd2luc3Rvbi5jcmVhdGVMb2dnZXIoe1xuICAgIGxldmVsOiBjb25maWcuY29uZmlnTGV2ZWwsXG4gICAgZm9ybWF0OiB3aW5zdG9uLmZvcm1hdC5jb21iaW5lKFxuICAgICAgICB3aW5zdG9uLmZvcm1hdC5jb2xvcml6ZSgpLFxuICAgICAgICB3aW5zdG9uLmZvcm1hdC5zaW1wbGUoKVxuICAgICksXG4gICAgdHJhbnNwb3J0czogW1xuICAgICAgICBuZXcgd2luc3Rvbi50cmFuc3BvcnRzLkNvbnNvbGUoKVxuICAgIF1cbn0pXG5cbmV4cG9ydCBkZWZhdWx0IGxvZ2dlciJdfQ==

@@ -1,0 +1,11 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = currentEpochSeconds;
+
+function currentEpochSeconds() {
+  return Math.floor(new Date().getTime() / 1000);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy91dGlscy9jdXJyZW50RXBvY2hTZWNvbmRzLnRzIl0sIm5hbWVzIjpbImN1cnJlbnRFcG9jaFNlY29uZHMiLCJNYXRoIiwiZmxvb3IiLCJEYXRlIiwiZ2V0VGltZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFlLFNBQVNBLG1CQUFULEdBQXVDO0FBQ2xELFNBQU9DLElBQUksQ0FBQ0MsS0FBTCxDQUFXLElBQUlDLElBQUosR0FBV0MsT0FBWCxLQUF1QixJQUFsQyxDQUFQO0FBQ0giLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBjdXJyZW50RXBvY2hTZWNvbmRzKCk6IG51bWJlciB7XG4gICAgcmV0dXJuIE1hdGguZmxvb3IobmV3IERhdGUoKS5nZXRUaW1lKCkgLyAxMDAwKVxufSJdfQ==

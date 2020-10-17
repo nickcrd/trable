@@ -1,0 +1,43 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _AuthController = _interopRequireDefault(require("../../controllers/AuthController"));
+
+var _SocketManager = _interopRequireDefault(require("../../sockets/SocketManager"));
+
+var _logger = _interopRequireDefault(require("../../utils/logger"));
+
+var _default = function _default(socket, next) {
+  var authHeader = socket.handshake.headers['authorization'];
+  var jwt;
+
+  if (authHeader && authHeader.split(' ')[0] === 'Bearer') {
+    jwt = authHeader.split(' ')[1];
+  } else {
+    _logger["default"].warn("No Auth Token specified");
+
+    next(new Error("No Auth Token specified"));
+    return;
+  }
+
+  _AuthController["default"].validateJWT(jwt).then(function (apiUser) {
+    _SocketManager["default"].socketIdMap.set(apiUser.id, socket.id);
+
+    _logger["default"].info(apiUser.id + " belongs to " + socket.id);
+
+    next();
+  })["catch"](function (err) {
+    _logger["default"].warn("Invalid Auth Token specified");
+
+    next(new Error("Unauthorized: Invalid Auth Token"));
+  });
+};
+
+exports["default"] = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9taWRkbGV3YXJlcy9hdXRoL3NvY2tldEF1dGhNaWRkbGV3YXJlLnRzIl0sIm5hbWVzIjpbInNvY2tldCIsIm5leHQiLCJhdXRoSGVhZGVyIiwiaGFuZHNoYWtlIiwiaGVhZGVycyIsImp3dCIsInNwbGl0IiwibG9nZ2VyIiwid2FybiIsIkVycm9yIiwiQXV0aENvbnRyb2xsZXIiLCJ2YWxpZGF0ZUpXVCIsInRoZW4iLCJhcGlVc2VyIiwiU29ja2V0TWFuYWdlciIsInNvY2tldElkTWFwIiwic2V0IiwiaWQiLCJpbmZvIiwiZXJyIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFDQTs7QUFDQTs7QUFDQTs7ZUFFZSxrQkFBQ0EsTUFBRCxFQUFpQkMsSUFBakIsRUFBK0M7QUFDMUQsTUFBTUMsVUFBVSxHQUFHRixNQUFNLENBQUNHLFNBQVAsQ0FBaUJDLE9BQWpCLENBQXlCLGVBQXpCLENBQW5CO0FBQ0EsTUFBSUMsR0FBSjs7QUFFQSxNQUFJSCxVQUFVLElBQUlBLFVBQVUsQ0FBQ0ksS0FBWCxDQUFpQixHQUFqQixFQUFzQixDQUF0QixNQUE2QixRQUEvQyxFQUF5RDtBQUNyREQsSUFBQUEsR0FBRyxHQUFHSCxVQUFVLENBQUNJLEtBQVgsQ0FBaUIsR0FBakIsRUFBc0IsQ0FBdEIsQ0FBTjtBQUNILEdBRkQsTUFFTztBQUNIQyx1QkFBT0MsSUFBUCxDQUFZLHlCQUFaOztBQUNBUCxJQUFBQSxJQUFJLENBQUMsSUFBSVEsS0FBSixDQUFVLHlCQUFWLENBQUQsQ0FBSjtBQUNBO0FBQ0g7O0FBRURDLDZCQUFlQyxXQUFmLENBQTJCTixHQUEzQixFQUFnQ08sSUFBaEMsQ0FBcUMsVUFBQUMsT0FBTyxFQUFJO0FBQzVDQyw4QkFBY0MsV0FBZCxDQUEwQkMsR0FBMUIsQ0FBOEJILE9BQU8sQ0FBQ0ksRUFBdEMsRUFBMENqQixNQUFNLENBQUNpQixFQUFqRDs7QUFDQVYsdUJBQU9XLElBQVAsQ0FBWUwsT0FBTyxDQUFDSSxFQUFSLEdBQWEsY0FBYixHQUE4QmpCLE1BQU0sQ0FBQ2lCLEVBQWpEOztBQUNBaEIsSUFBQUEsSUFBSTtBQUNQLEdBSkQsV0FJUyxVQUFBa0IsR0FBRyxFQUFJO0FBQ1paLHVCQUFPQyxJQUFQLENBQVksOEJBQVo7O0FBQ0FQLElBQUFBLElBQUksQ0FBQyxJQUFJUSxLQUFKLENBQVUsa0NBQVYsQ0FBRCxDQUFKO0FBQ0gsR0FQRDtBQVFILEMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge1NvY2tldH0gZnJvbSBcInNvY2tldC5pb1wiO1xuaW1wb3J0IEF1dGhDb250cm9sbGVyIGZyb20gXCIuLi8uLi9jb250cm9sbGVycy9BdXRoQ29udHJvbGxlclwiO1xuaW1wb3J0IFNvY2tldE1hbmFnZXIgZnJvbSBcIi4uLy4uL3NvY2tldHMvU29ja2V0TWFuYWdlclwiO1xuaW1wb3J0IGxvZ2dlciBmcm9tIFwiLi4vLi4vdXRpbHMvbG9nZ2VyXCI7XG5cbmV4cG9ydCBkZWZhdWx0IChzb2NrZXQ6IFNvY2tldCwgbmV4dDogKGVycj86IGFueSkgPT4gdm9pZCkgPT4ge1xuICAgIGNvbnN0IGF1dGhIZWFkZXIgPSBzb2NrZXQuaGFuZHNoYWtlLmhlYWRlcnNbJ2F1dGhvcml6YXRpb24nXVxuICAgIGxldCBqd3Q6IHN0cmluZ1xuXG4gICAgaWYgKGF1dGhIZWFkZXIgJiYgYXV0aEhlYWRlci5zcGxpdCgnICcpWzBdID09PSAnQmVhcmVyJykge1xuICAgICAgICBqd3QgPSBhdXRoSGVhZGVyLnNwbGl0KCcgJylbMV07XG4gICAgfSBlbHNlIHtcbiAgICAgICAgbG9nZ2VyLndhcm4oXCJObyBBdXRoIFRva2VuIHNwZWNpZmllZFwiKVxuICAgICAgICBuZXh0KG5ldyBFcnJvcihcIk5vIEF1dGggVG9rZW4gc3BlY2lmaWVkXCIpKVxuICAgICAgICByZXR1cm5cbiAgICB9XG5cbiAgICBBdXRoQ29udHJvbGxlci52YWxpZGF0ZUpXVChqd3QpLnRoZW4oYXBpVXNlciA9PiB7XG4gICAgICAgIFNvY2tldE1hbmFnZXIuc29ja2V0SWRNYXAuc2V0KGFwaVVzZXIuaWQsIHNvY2tldC5pZClcbiAgICAgICAgbG9nZ2VyLmluZm8oYXBpVXNlci5pZCArIFwiIGJlbG9uZ3MgdG8gXCIgKyBzb2NrZXQuaWQpXG4gICAgICAgIG5leHQoKVxuICAgIH0pLmNhdGNoKGVyciA9PiB7XG4gICAgICAgIGxvZ2dlci53YXJuKFwiSW52YWxpZCBBdXRoIFRva2VuIHNwZWNpZmllZFwiKVxuICAgICAgICBuZXh0KG5ldyBFcnJvcihcIlVuYXV0aG9yaXplZDogSW52YWxpZCBBdXRoIFRva2VuXCIpKVxuICAgIH0pXG59Il19
