@@ -9,7 +9,7 @@ import TrilaterationManager from "../math/TrilaterationManager";
 class LocationController {
 
     public async submitNewMeasurement(apiUser: TrableApiUser, targetId: string, rssi1m: number, rssiMeasurements: number[], pathLossParam: number, timestamp?: number) {
-        logger.debug("Received new RSSI measurements { " + "target: " +  targetId + ", rssi1m: " + rssi1m + ", rssiMeasurements: " + rssiMeasurements + ", pathLossParam: " + pathLossParam + ",timestamp: " + timestamp + " }")
+        logger.info("Received new RSSI measurements { " + "target: " +  targetId + ", rssi1m: " + rssi1m + ", rssiMeasurements: " + rssiMeasurements + ", pathLossParam: " + pathLossParam + ",timestamp: " + timestamp + " }")
 
         const bleNode = await DeviceController.getNodeFromApiUserId(apiUser.id)
         if (bleNode == null) {

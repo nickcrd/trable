@@ -5,7 +5,7 @@ import {config} from "node-config-ts";
 var kalmanFiltersMap: Map<string, KalmanFilter> = new Map()
 
 export const getDefaultKalmanFilter = () => {
-    return new KalmanFilter({ R: config.nodeConfig.kalman.R, Q: config.nodeConfig.kalman.Q })
+    return new KalmanFilter({ R: config.kalmanFilterConfig.R, Q: config.kalmanFilterConfig.Q })
 }
 
 /** @deprecated */

@@ -19,6 +19,8 @@ export default class DistanceCalculationState {
 
     addMeasurement(rssi: number, timestamp?: number) {
         // Filter then push
+
+        // Disabled Kalman Filter since it actually made the measurements worse, not sure why.
         rssi = this.kalmanFilter.filter(rssi, (this.isMoving ? this.movingScalar : 0))
         this.rssiMeasurements.push({timestamp, rssi})
     }

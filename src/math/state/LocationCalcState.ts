@@ -1,6 +1,5 @@
 import {BLENode} from "../../models/device/BLENodeModel";
 import DistanceCalculationState from "./DistanceCalculationState";
-import MathConstants from "../MathConstants";
 import DeviceController from "../../controllers/DeviceController";
 import Location from "../../models/device/Location";
 import logger from "../../utils/logger";
@@ -75,7 +74,10 @@ export default class LocationCalcState {
                 continue
             }
             distancesMap.set(bleNode.location as Location, distance)
+            console.log(bleNode.displayName + " -> " + distance)
         }
+
+        console.log(distancesMap.size)
 
         if (distancesMap.size < 3) {
             throw Error("Not enough nodes to perform trilateration for user " + this.userId + " (Needs at least 3 nodes)")
