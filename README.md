@@ -10,7 +10,7 @@ git clone https://github.com/nickcrd/trable && cd ./trable
 ``` 
 2. Install with npm or yarn
 ```
-npm install -g .
+npm install -g . --only=prod
 ```
 3. Edit the config found in ``/config/default.json`` and ``/config/mapConfig.json``
 
@@ -35,3 +35,9 @@ Example: To override the MongoDB server url, specified within the config as "mon
 ```
 trable --mongoUrl some-mongo-url-here
 ```
+
+## Related Repositories:
+|<a href="https://github.com/nickcrd/trable-ios/"><img src="https://i.imgur.com/SevbyjI.png" width="100" height="100"/></a>|<a href="https://github.com/nickcrd/trable/"><img src="https://i.imgur.com/5D8gFiS.png" width="100" height="100"/></a>|<a href="https://github.com/nickcrd/trable-node/"><img src="https://i.imgur.com/sNpxjbc.png" width="100" height="100"/></a>|
+|-|-|-|
+|[Trable iOS App](https://github.com/nickcrd/trable-ios/)|Trable Backend|[Trable Node](https://github.com/nickcrd/trable-node/)|
+
